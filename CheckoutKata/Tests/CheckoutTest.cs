@@ -1,11 +1,12 @@
+using CheckoutKata.Logic;
 using FluentAssertions;
 
 
-namespace CheckoutKata
+namespace CheckoutKata.Tests
 {
     public class CheckoutTest
     {
-            IEnumerable<IPricingRule> pricingRule = new[] {
+        IEnumerable<IPricingRule> pricingRule = new[] {
             new PricingRule{SKU = 'A', UnitPrice = 50, SpecialPriceQuantity = 3, SpecialPriceAmount = 130 },
             new PricingRule{SKU = 'B', UnitPrice = 30 },
             new PricingRule{SKU = 'C', UnitPrice = 20, SpecialPriceQuantity = 2, SpecialPriceAmount = 30 },
@@ -35,7 +36,7 @@ namespace CheckoutKata
         }
 
         [Theory]
-        [InlineData("A","B")]
+        [InlineData("A", "B")]
         public void GetCorrectTotalPriceFor2Items(string val1, string val2)
         {
             ICheckout checkout = new Checkout((IEnumerable<PricingRule>)pricingRule);
@@ -47,7 +48,7 @@ namespace CheckoutKata
         }
 
         [Theory]
-        [InlineData("A", "B","C","A")]
+        [InlineData("A", "B", "C", "A")]
         public void GetCorrectTotalPriceFor4ItemsWithOneDuplicate(string val1, string val2, string val3, string val4)
         {
             ICheckout checkout = new Checkout((IEnumerable<PricingRule>)pricingRule);
@@ -75,8 +76,8 @@ namespace CheckoutKata
         }
 
         [Theory]
-        [InlineData("A", "A", "A","B")]
-        public void ShouldGiveDiscountedPrice(string val1, string val2, string val3,string val4)
+        [InlineData("A", "A", "A", "B")]
+        public void ShouldGiveDiscountedPrice(string val1, string val2, string val3, string val4)
         {
             ICheckout checkout = new Checkout((IEnumerable<PricingRule>)pricingRule);
 
@@ -89,7 +90,7 @@ namespace CheckoutKata
         }
 
         [Theory]
-        [InlineData("A", "C", "D", "A","C","A","C")]
+        [InlineData("A", "C", "D", "A", "C", "A", "C")]
         public void ShouldGiveDiscountedPriceWhenPassing7UnorderedItems(string val1, string val2, string val3, string val4, string val5, string val6, string val7)
         {
             ICheckout checkout = new Checkout((IEnumerable<PricingRule>)pricingRule);

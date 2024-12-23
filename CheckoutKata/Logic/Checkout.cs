@@ -1,6 +1,4 @@
-﻿
-
-namespace CheckoutKata
+﻿namespace CheckoutKata.Logic
 {
     public class Checkout : ICheckout
     {
@@ -11,14 +9,14 @@ namespace CheckoutKata
         public Checkout(IEnumerable<PricingRule> pricingRules)
         {
             _pricingRules = pricingRules;
-            _items = new Dictionary<char,int> { };
+            _items = new Dictionary<char, int> { };
         }
 
         public void Scan(string item)
         {
             int currentCount;
 
-            if (!String.IsNullOrEmpty(item))
+            if (!string.IsNullOrEmpty(item))
             {
                 item = item.ToUpper();
                 var charItem = char.Parse(item);
@@ -42,7 +40,7 @@ namespace CheckoutKata
         {
             var totalPrice = 0;
 
-            foreach(var item in _items)
+            foreach (var item in _items)
             {
                 var pricingRule = _pricingRules.FirstOrDefault(pricingRule => pricingRule.SKU == item.Key);
                 if (pricingRule != null)
@@ -52,9 +50,9 @@ namespace CheckoutKata
                         // Assuming that if X is the quantity to activate the special price, all Multiples of X will have the discount applied to them
                         if (item.Value >= pricingRule.SpecialPriceQuantity)
                         {
-                            totalPrice += (item.Value / pricingRule.SpecialPriceQuantity) * pricingRule.SpecialPriceAmount;
+                            totalPrice += item.Value / pricingRule.SpecialPriceQuantity * pricingRule.SpecialPriceAmount;
                             //To find the remainder of the items that won't have a discount apllied to them
-                            totalPrice += (item.Value % pricingRule.SpecialPriceQuantity) * pricingRule.UnitPrice;
+                            totalPrice += item.Value % pricingRule.SpecialPriceQuantity * pricingRule.UnitPrice;
                         }
                         else
                             totalPrice += pricingRule.UnitPrice * item.Value;
@@ -67,6 +65,6 @@ namespace CheckoutKata
             return totalPrice;
         }
 
-        
+
     }
 }
