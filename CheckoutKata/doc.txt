@@ -1,0 +1,6 @@
+Assumptions made in this solution:
+Pricing rules apply to both the unit price and the special price as price of a single item can change as well.
+If for instance there's a multiprice offer on 3 times and buys 6 of them, then the discount gets applied twice.
+Item SKUs can only be single letters: A,B,C..Z etc
+
+TDD was used to complete this Kata.
