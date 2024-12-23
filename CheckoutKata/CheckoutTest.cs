@@ -74,5 +74,18 @@ namespace CheckoutKata
             var result = checkout.GetTotaPrice();
             result.Should().Be(100);
         }
+
+        [Theory]
+        [InlineData("A", "A", "A")]
+        public void ShouldGiveDiscountedPrice(string val1, string val2, string val3)
+        {
+            ICheckout checkout = new Checkout((IEnumerable<PricingRule>)pricingRule);
+
+            checkout.Scan(val1);
+            checkout.Scan(val2);
+            checkout.Scan(val3);
+            var result = checkout.GetTotaPrice();
+            result.Should().Be(130);
+        }
     }
 }
