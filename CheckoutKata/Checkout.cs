@@ -4,26 +4,26 @@ namespace CheckoutKata
 {
     public class Checkout : ICheckout
     {
-        private List<char> _items;
+        private Dictionary<char, int> _items;
         private IEnumerable<PricingRule> _pricingRules;
 
 
         public Checkout(IEnumerable<PricingRule> pricingRules)
         {
             _pricingRules = pricingRules;
-            _items = new List<char> { };
+            _items = new Dictionary<char,int> { };
         }
 
-        public int GetTotaPrice()
+        public int GetTotalPrice()
         {
             var totalPrice = 0;
 
-            for (int i = 0; i < _items.Count; i++)
+            foreach(var item in _items)
             {
-                var pricingRule = _pricingRules.FirstOrDefault(pricingRule => pricingRule.SKU == _items[i]); //.FirstOrDefault(pricingRule => pricingRule.UnitPrice);
+                var pricingRule = _pricingRules.FirstOrDefault(pricingRule => pricingRule.SKU == item.Key); //.FirstOrDefault(pricingRule => pricingRule.UnitPrice);
                 if (pricingRule != null)
                 {
-                    totalPrice += pricingRule.UnitPrice;
+                    totalPrice += pricingRule.UnitPrice * item.Value;
                 }
             }
 
@@ -32,9 +32,19 @@ namespace CheckoutKata
 
         public void Scan(string item)
         {
+            int currentCount;
+
             if (!String.IsNullOrEmpty(item))
             {
-                _items.AddRange(item);
+                if (!_items.ContainsKey(char.Parse(item)))
+                {
+                    _items.Add(char.Parse(item), 1);
+                }
+                else
+                {
+                    _items.TryGetValue(char.Parse(item), out currentCount);
+                    _items[char.Parse(item)] = currentCount + 1;
+                }
             }
         }
     }

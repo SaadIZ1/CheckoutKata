@@ -20,7 +20,7 @@ namespace CheckoutKata
             ICheckout checkout = new Checkout((IEnumerable<PricingRule>)pricingRule);
 
             checkout.Scan(val1);
-            var result = checkout.GetTotaPrice();
+            var result = checkout.GetTotalPrice();
             result.Should().Be(0);
         }
 
@@ -31,7 +31,7 @@ namespace CheckoutKata
             ICheckout checkout = new Checkout((IEnumerable<PricingRule>)pricingRule);
 
             checkout.Scan(val1);
-            var result = checkout.GetTotaPrice();
+            var result = checkout.GetTotalPrice();
             result.Should().Be(50);
         }
 
@@ -43,7 +43,7 @@ namespace CheckoutKata
 
             checkout.Scan(val1);
             checkout.Scan(val2);
-            var result = checkout.GetTotaPrice();
+            var result = checkout.GetTotalPrice();
             result.Should().Be(80);
         }
 
@@ -57,7 +57,7 @@ namespace CheckoutKata
             checkout.Scan(val2);
             checkout.Scan(val3);
             checkout.Scan(val4);
-            var result = checkout.GetTotaPrice();
+            var result = checkout.GetTotalPrice();
             result.Should().Be(150);
         }
 
@@ -71,20 +71,21 @@ namespace CheckoutKata
             checkout.Scan(val2);
             checkout.Scan(val3);
             checkout.Scan(val4);
-            var result = checkout.GetTotaPrice();
+            var result = checkout.GetTotalPrice();
             result.Should().Be(100);
         }
 
         [Theory]
-        [InlineData("A", "A", "A")]
-        public void ShouldGiveDiscountedPrice(string val1, string val2, string val3)
+        [InlineData("A", "A", "A","B")]
+        public void ShouldGiveDiscountedPrice(string val1, string val2, string val3,string val4)
         {
             ICheckout checkout = new Checkout((IEnumerable<PricingRule>)pricingRule);
 
             checkout.Scan(val1);
             checkout.Scan(val2);
             checkout.Scan(val3);
-            var result = checkout.GetTotaPrice();
+            checkout.Scan(val4);
+            var result = checkout.GetTotalPrice();
             result.Should().Be(130);
         }
     }

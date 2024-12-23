@@ -2,7 +2,7 @@
 {
     public interface ICheckout
     {
-        int GetTotaPrice();
+        int GetTotalPrice();
         void Scan(string item);
     }
 }
