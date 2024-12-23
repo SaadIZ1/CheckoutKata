@@ -8,7 +8,7 @@ namespace CheckoutKata
         // checkout = new Checkout(pricingRule);
 
             IEnumerable<IPricingRule> pricingRule = new[] {
-            new PricingRule{SKU = 'A', UnitPrice = 50 },
+            new PricingRule{SKU = 'A', UnitPrice = 50, SpecialPriceQuantity = 3, SpecialPriceAmount = 130 },
             new PricingRule{SKU = 'B', UnitPrice = 30 },
             new PricingRule{SKU = 'C', UnitPrice = 20 },
         };
