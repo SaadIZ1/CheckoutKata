@@ -10,7 +10,8 @@ namespace CheckoutKata
             IEnumerable<IPricingRule> pricingRule = new[] {
             new PricingRule{SKU = 'A', UnitPrice = 50, SpecialPriceQuantity = 3, SpecialPriceAmount = 130 },
             new PricingRule{SKU = 'B', UnitPrice = 30 },
-            new PricingRule{SKU = 'C', UnitPrice = 20 },
+            new PricingRule{SKU = 'C', UnitPrice = 20, SpecialPriceQuantity = 2, SpecialPriceAmount = 30 },
+            new PricingRule{SKU = 'D', UnitPrice = 10 },
         };
 
         [Theory]
@@ -87,6 +88,23 @@ namespace CheckoutKata
             checkout.Scan(val4);
             var result = checkout.GetTotalPrice();
             result.Should().Be(160);
+        }
+
+        [Theory]
+        [InlineData("A", "C", "D", "A","C","A","C")]
+        public void ShouldGiveDiscountedPriceWhenPassing7UnorderedItems(string val1, string val2, string val3, string val4, string val5, string val6, string val7)
+        {
+            ICheckout checkout = new Checkout((IEnumerable<PricingRule>)pricingRule);
+
+            checkout.Scan(val1);
+            checkout.Scan(val2);
+            checkout.Scan(val3);
+            checkout.Scan(val4);
+            checkout.Scan(val5);
+            checkout.Scan(val6);
+            checkout.Scan(val7);
+            var result = checkout.GetTotalPrice();
+            result.Should().Be(190);
         }
     }
 }
