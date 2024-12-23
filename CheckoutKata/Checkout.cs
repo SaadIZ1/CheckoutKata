@@ -5,12 +5,13 @@ namespace CheckoutKata
     public class Checkout : ICheckout
     {
         private List<char> _items;
-        private Dictionary<char, int> skuDict;
+        private IEnumerable<PricingRule> _pricingRules;
 
-        public Checkout()
+
+        public Checkout(IEnumerable<PricingRule> pricingRules)
         {
             _items = new List<char> { };
-            skuDict = new Dictionary<char, int> { { 'A', 50 }, { 'B', 30 } };
+            _pricingRules = pricingRules;
         }
 
         public int GetTotaPrice()

@@ -7,6 +7,8 @@ namespace CheckoutKata
     {
         ICheckout checkout = new Checkout();
 
+        PricingRule pricingRule = new PricingRule();
+
         [Theory]
         [InlineData("")]
         public void ShouldReturnZeroWhenStringIsEmpty(string val1)
