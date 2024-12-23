@@ -106,5 +106,18 @@ namespace CheckoutKata
             var result = checkout.GetTotalPrice();
             result.Should().Be(190);
         }
+
+        [Theory]
+        [InlineData("a", "c", "d")]
+        public void ScanningLowerCaseLetterShouldNotCauseAnIssue(string val1, string val2, string val3)
+        {
+            ICheckout checkout = new Checkout((IEnumerable<PricingRule>)pricingRule);
+
+            checkout.Scan(val1);
+            checkout.Scan(val2);
+            checkout.Scan(val3);
+            var result = checkout.GetTotalPrice();
+            result.Should().Be(190);
+        }
     }
 }
