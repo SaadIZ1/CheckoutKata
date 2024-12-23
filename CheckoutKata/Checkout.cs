@@ -21,7 +21,10 @@ namespace CheckoutKata
             for (int i = 0; i < _items.Count; i++)
             {
                 var pricingRule = _pricingRules.FirstOrDefault(pricingRule => pricingRule.SKU == _items[i]); //.FirstOrDefault(pricingRule => pricingRule.UnitPrice);
-                totalPrice += pricingRule.UnitPrice;
+                if (pricingRule != null)
+                {
+                    totalPrice += pricingRule.UnitPrice;
+                }
             }
 
             return totalPrice;
