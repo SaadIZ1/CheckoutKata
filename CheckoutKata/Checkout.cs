@@ -31,6 +31,8 @@ namespace CheckoutKata
                             
                             totalPrice += (item.Value % pricingRule.SpecialPriceQuantity) * pricingRule.UnitPrice;
                         }
+                        else
+                            totalPrice += pricingRule.UnitPrice * item.Value;
                     }
                     else
                         totalPrice += pricingRule.UnitPrice * item.Value;
@@ -43,7 +45,7 @@ namespace CheckoutKata
         public void Scan(string item)
         {
             int currentCount;
-
+            item = item.ToUpper();
             if (!String.IsNullOrEmpty(item))
             {
                 if (!_items.ContainsKey(char.Parse(item)))

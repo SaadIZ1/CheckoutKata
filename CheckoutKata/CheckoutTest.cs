@@ -117,7 +117,7 @@ namespace CheckoutKata
             checkout.Scan(val2);
             checkout.Scan(val3);
             var result = checkout.GetTotalPrice();
-            result.Should().Be(190);
+            result.Should().Be(80);
         }
     }
 }
