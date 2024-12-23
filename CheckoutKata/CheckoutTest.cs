@@ -5,8 +5,6 @@ namespace CheckoutKata
 {
     public class CheckoutTest
     {
-        // checkout = new Checkout(pricingRule);
-
             IEnumerable<IPricingRule> pricingRule = new[] {
             new PricingRule{SKU = 'A', UnitPrice = 50, SpecialPriceQuantity = 3, SpecialPriceAmount = 130 },
             new PricingRule{SKU = 'B', UnitPrice = 30 },
@@ -63,7 +61,7 @@ namespace CheckoutKata
         }
 
         [Theory]
-        [InlineData("A", "B", "C", "D")]
+        [InlineData("A", "B", "C", "F")]
         public void GetCorrectTotalPriceForWhilePassingAnIncorrectSKU(string val1, string val2, string val3, string val4)
         {
             ICheckout checkout = new Checkout((IEnumerable<PricingRule>)pricingRule);
@@ -118,6 +116,17 @@ namespace CheckoutKata
             checkout.Scan(val3);
             var result = checkout.GetTotalPrice();
             result.Should().Be(80);
+        }
+
+        [Theory]
+        [InlineData("0")]
+        public void ShouldReturnZeroWhenStringIsNotALetter(string val1)
+        {
+            ICheckout checkout = new Checkout((IEnumerable<PricingRule>)pricingRule);
+
+            checkout.Scan(val1);
+            var result = checkout.GetTotalPrice();
+            result.Should().Be(0);
         }
     }
 }
