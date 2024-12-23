@@ -20,10 +20,20 @@ namespace CheckoutKata
 
             foreach(var item in _items)
             {
-                var pricingRule = _pricingRules.FirstOrDefault(pricingRule => pricingRule.SKU == item.Key); //.FirstOrDefault(pricingRule => pricingRule.UnitPrice);
+                var pricingRule = _pricingRules.FirstOrDefault(pricingRule => pricingRule.SKU == item.Key);
                 if (pricingRule != null)
                 {
-                    totalPrice += pricingRule.UnitPrice * item.Value;
+                    if (pricingRule.SpecialPriceQuantity != 0)
+                    {
+                        if (item.Value >= pricingRule.SpecialPriceQuantity)
+                        {
+                            totalPrice += (item.Value / pricingRule.SpecialPriceQuantity) * pricingRule.SpecialPriceAmount;
+                            
+                            totalPrice += (item.Value % pricingRule.SpecialPriceQuantity) * pricingRule.UnitPrice;
+                        }
+                    }
+                    else
+                        totalPrice += pricingRule.UnitPrice * item.Value;
                 }
             }
 
