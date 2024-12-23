@@ -1,8 +1,8 @@
 ﻿namespace CheckoutKata
 {
-    public class PricingRule
+    public class PricingRule : IPricingRule
     {
-        public char SKU;
-        public int UnitPrice;
+        public char SKU { get; set; }
+        public int UnitPrice { get; set; }
     }
 }

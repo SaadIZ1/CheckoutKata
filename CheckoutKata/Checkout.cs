@@ -10,8 +10,8 @@ namespace CheckoutKata
 
         public Checkout(IEnumerable<PricingRule> pricingRules)
         {
-            _items = new List<char> { };
             _pricingRules = pricingRules;
+            _items = new List<char> { };
         }
 
         public int GetTotaPrice()
@@ -20,7 +20,8 @@ namespace CheckoutKata
 
             for (int i = 0; i < _items.Count; i++)
             {
-                totalPrice += skuDict[_items[i]];   
+                var pricingRule = _pricingRules.FirstOrDefault(pricingRule => pricingRule.SKU == _items[i]); //.FirstOrDefault(pricingRule => pricingRule.UnitPrice);
+                totalPrice += pricingRule.UnitPrice;
             }
 
             return totalPrice;
