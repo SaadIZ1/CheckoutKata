@@ -10,7 +10,7 @@ namespace CheckoutKata
         public Checkout()
         {
             _items = new List<char> { };
-            skuDict = new Dictionary<char, int> { { 'A', 50 } };
+            skuDict = new Dictionary<char, int> { { 'A', 50 }, { 'B', 30 } };
         }
 
         public int GetTotaPrice()
