@@ -10,6 +10,7 @@ namespace CheckoutKata
             IEnumerable<IPricingRule> pricingRule = new[] {
             new PricingRule{SKU = 'A', UnitPrice = 50 },
             new PricingRule{SKU = 'B', UnitPrice = 30 },
+            new PricingRule{SKU = 'C', UnitPrice = 20 },
         };
 
         [Theory]
@@ -46,5 +47,32 @@ namespace CheckoutKata
             result.Should().Be(80);
         }
 
+        [Theory]
+        [InlineData("A", "B","C","A")]
+        public void GetCorrectTotalPriceFor4ItemsWithOneDuplicate(string val1, string val2, string val3, string val4)
+        {
+            ICheckout checkout = new Checkout((IEnumerable<PricingRule>)pricingRule);
+
+            checkout.Scan(val1);
+            checkout.Scan(val2);
+            checkout.Scan(val3);
+            checkout.Scan(val4);
+            var result = checkout.GetTotaPrice();
+            result.Should().Be(150);
+        }
+
+        [Theory]
+        [InlineData("A", "B", "C", "D")]
+        public void GetCorrectTotalPriceForWhilePassingAnIncorrectSKU(string val1, string val2, string val3, string val4)
+        {
+            ICheckout checkout = new Checkout((IEnumerable<PricingRule>)pricingRule);
+
+            checkout.Scan(val1);
+            checkout.Scan(val2);
+            checkout.Scan(val3);
+            checkout.Scan(val4);
+            var result = checkout.GetTotaPrice();
+            result.Should().Be(100);
+        }
     }
 }
