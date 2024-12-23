@@ -2,23 +2,26 @@
 
 namespace CheckoutKata
 {
-    public class Checkout
+    public class Checkout : ICheckout
     {
-        private List<char> Items;
+        private List<char> _items;
 
-        public Checkout(List<char> items)
+        public Checkout()
         {
-            Items = items;
+            _items = new List<char> { };
         }
 
-        public static int GetTotaPrice()
+        public int GetTotaPrice()
         {
             return 0;
         }
 
-        internal static void Scan(string item)
+        public void Scan(string item)
         {
-            
+            if (String.IsNullOrEmpty(item))
+            {
+                _items.AddRange(item);
+            }
         }
     }
 }
