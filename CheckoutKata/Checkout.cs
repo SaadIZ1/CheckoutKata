@@ -1,11 +1,24 @@
 ﻿
+
 namespace CheckoutKata
 {
-    internal class Checkout
+    public class Checkout
     {
-        internal static object GetTotaPrice(string item)
+        private List<char> Items;
+
+        public Checkout(List<char> items)
+        {
+            Items = items;
+        }
+
+        public static int GetTotaPrice()
         {
             return 0;
+        }
+
+        internal static void Scan(string item)
+        {
+            
         }
     }
 }

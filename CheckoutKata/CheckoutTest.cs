@@ -7,8 +7,8 @@ namespace CheckoutKata
         [Fact]
         public void ShouldReturnZeroWhenStringIsEmpty()
         {
-            String item = "";
-            var result = Checkout.GetTotaPrice(item);
+            Checkout.Scan("");
+            var result = Checkout.GetTotaPrice();
             result.Should().Be(0);
 
         }
